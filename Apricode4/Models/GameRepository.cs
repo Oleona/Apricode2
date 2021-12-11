@@ -31,9 +31,9 @@ namespace Apricode4.Models
             else
             {
                 await UpdateExistingGame(dbGame, gameModel);
-                dbContext.Update(dbGame);         
+                dbContext.Update(dbGame);
             }
-
+           
             await dbContext.SaveChangesAsync();
         }
 
@@ -88,15 +88,12 @@ namespace Apricode4.Models
         private async Task UpdateExistingGame(VideoGame dbGame, GameModel gameModel)
         {
             var allGenres = await FindGenresByModel(gameModel);
-           // var newGenres = allGenres.Except(dbGame.Genres).ToList();//
-
+           
             dbGame.GameName = gameModel.GameName;
             dbGame.StudioDeveloper = gameModel.StudioDeveloper;
-           // dbGame.Genres.RemoveAll(_ => true);//
-          //  dbGame.Genres.AddRange(newGenres);//
             dbGame.Genres = allGenres;
 
-            
+
         }
 
         private async Task<List<Genre>> FindGenresByModel(GameModel gameModel) =>
